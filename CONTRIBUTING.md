@@ -35,5 +35,5 @@ addresses, credentials, personal filesystem paths or internal process records.
 ## Security
 
 Do not report vulnerabilities in public issues. Follow the repository's
-`SECURITY.md`, or the organisation's [security policy](SECURITY.md) when it has no
+`SECURITY.md`, or the organisation's [security policy](https://github.com/ramfluxhq/.github/blob/main/SECURITY.md) when it has no
 repository-specific policy.
