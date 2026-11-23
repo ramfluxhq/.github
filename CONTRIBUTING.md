@@ -1,61 +1,39 @@
 # Contributing to Ramflux
 
-Thanks for your interest in Ramflux. This document covers how to build, the
-quality bar, and how to submit changes.
+Use the README, contribution guide and CI configuration of the repository you
+are changing for its build commands, supported platforms and required checks.
+Repository-specific guidance takes precedence over this organisation default.
 
 ## Licensing of contributions
 
-- This repository (the **core**) is BSD-3-Clause. By submitting a contribution
-  you agree it is licensed under BSD-3-Clause (inbound = outbound).
-- All commits must carry a **DCO sign-off**: `git commit -s` (this certifies you
-  wrote the change or have the right to submit it; see https://developercertificate.org).
-- Client repositories (AGPL-3.0) additionally require signing the `CLA.md`.
+- The core repository, `ramflux`, uses BSD-3-Clause. Contributions to the core
+  use the same licence (inbound = outbound).
+- The client repositories, including `ramflux-tui`, `ramflux-desktop`,
+  `ramflux-ios` and `ramflux-android`, use AGPL-3.0-or-later with the applicable
+  exception in each repository's `LICENSE`. Contributions to a client follow
+  that repository's licence and require its `CLA.md`.
+- For other repositories, read their `LICENSE` and licensing guidance before
+  contributing. These defaults do not assign the core's licence to other work.
+- Every commit requires a DCO sign-off: `git commit -s`. It certifies that you
+  wrote the contribution or have the right to submit it; see the
+  [Developer Certificate of Origin](https://developercertificate.org).
 
-## Building and testing
+## Quality and code conventions
 
-```sh
-cargo build --workspace
-cargo test  --workspace
-```
-
-The toolchain version is pinned in `rust-toolchain.toml`. Real-network
-integration tests are feature-gated and require a local container runtime:
-
-```sh
-cargo test --features realnet
-```
-
-## Quality bar (enforced in CI)
-
-- `cargo fmt --all -- --check` — formatting is enforced.
-- `cargo clippy --workspace --all-targets --all-features -- -D warnings` —
-  **zero warnings**.
-- `cargo test --workspace` must pass.
-- `cargo deny check` and `cargo audit` must pass (supply chain).
-
-## Code conventions
-
-- **Comments and documentation are written in English.** This is a hard rule —
-  do not introduce comments in any other language.
-- Every source file starts with an SPDX header:
-  `// SPDX-License-Identifier: BSD-3-Clause`.
-- **No panics in production code paths.** `unwrap`, `expect`, `panic!`, `dbg!`,
-  and `todo!` are for tests only; in library/production code, return a typed
-  error.
-- **No `std::sync::{Mutex, RwLock, Condvar}` in production** — use
-  `parking_lot` or `tokio::sync`.
-- Prefer feature-gating heavy or optional code paths.
-- Follow Conventional Commits for messages: `feat:`, `fix:`, `perf:`,
-  `refactor:`, `test:`, `docs:`, `chore:`.
+Write comments and documentation in English. Use the repository's file headers,
+formatters, linters and tests. Source headers must identify the licence applicable
+to that file; do not copy BSD headers into AGPL client code. Handle production
+errors explicitly and keep input parsing and resource use bounded.
 
 ## Pull requests
 
-- Keep PRs focused; describe what changed and how you tested it.
-- Update `CHANGELOG.md` under `## [Unreleased]`.
-- Do not include internal hostnames, IP addresses, credentials, or private
-  infrastructure paths.
-- CI must be green before review.
+Keep changes focused and explain their purpose and verification. Add a changelog
+entry under `## [Unreleased]` where the repository maintains a changelog. Pass the
+repository's required CI checks. Do not include internal hostnames, private
+addresses, credentials, personal filesystem paths or internal process records.
 
 ## Security
 
-Do not file security problems as public issues — see `SECURITY.md`.
+Do not report vulnerabilities in public issues. Follow the repository's
+`SECURITY.md`, or the organisation's [security policy](SECURITY.md) when it has no
+repository-specific policy.
